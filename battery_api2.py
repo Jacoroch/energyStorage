@@ -94,4 +94,28 @@ async def load_battery_data():
             return {"error": "CSV file must include 'Timestamp', 'Battery_Level', and 'Battery_Capacity_kW' columns."}
     except Exception as e:
         return {"error": str(e)}
+    
+"""
+Para hacer update del status de la bateria:
+curl -X POST "http://127.0.0.1:8000/battery/status" -H "Content-Type: application/json" -d '{"energy_available_kW": 8.5, "battery_capacity_kW": 10}'
+--------------------------------------------------------------------------------------------------
+
+Este endpoint devuelve el último estado de la batería que se haya registrado, incluyendo el timestamp, el porcentaje de carga (battery_level), la capacidad total (battery_capacity_kW), y la energía disponible en kW (energy_available_kW).
+curl -X GET "http://127.0.0.1:8000/battery/current"
+--------------------------------------------------------------------------------------------------
+
+Este endpoint permite recuperar el historial de datos de la batería en función de un delta de tiempo. Usa parámetros como 1d (último día), 2h (últimas dos horas), 30m (últimos 30 minutos
+Ej, Un dia
+curl -X GET "http://127.0.0.1:8000/battery/history?delta=1d"
+
+Una hora
+curl -X GET "http://127.0.0.1:8000/battery/history?delta=1h"
+
+--------------------------------------------------------------------------------------------------
+Este endpoint es para cargar los datos de la bateria, a la memoria y poderlos visualizar con los otros comandos
+*Este endpoint se debe cambiar para manejar los datos en la base de datos de la aplicacion, aca carga un CSV con datos inventados
+
+curl -X POST "http://127.0.0.1:8000/battery/load"
+
+"""
 
